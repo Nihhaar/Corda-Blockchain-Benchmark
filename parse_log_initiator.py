@@ -38,12 +38,13 @@ def parse_read(filename, iterations):
 	# Calculate metrics averaged over iterations
 	for i in range(iterations):
 		subpart = list(od.keys())[requests*i : requests*(i+1)]
-		latency = sum((od[key][5] - od[key][0])/1000.0 for key in subpart) / requests # in sec
-		total_time += (od[subpart[-1]][5] - od[subpart[0]][0])/1000.0 # in sec
-		throughput += requests/total_time # in tps
+		latency += sum((od[key][5] - od[key][0])/1000.0 for key in subpart) # in sec
+		local_time = (od[subpart[-1]][5] - od[subpart[0]][0])/1000.0 # in sec
+		total_time += local_time
+		#print("Local throughput: {} for iteration {}".format(requests/local_time, i))
 
-	throughput /= iterations
-	latency /= iterations
+	throughput = (requests * iterations) / total_time
+	latency /= (iterations * requests)
 	total_time /= iterations
 
 	# Print metrics
