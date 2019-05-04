@@ -1,9 +1,8 @@
 # Benchmarking Corda blockchain framework
+
 Corda is an open source blockchain project, designed for business from the start. Read more about Corda [here](https://github.com/corda/corda). This repository has instructions and some resources to benchmark Corda-3.3 blockchain framework. 
 
-On a high level view, I used JMeter to drive RPC traffic at a node, in the form of flow start requests. The measurements are taken from starting the RPC request to the completion of the flow. All the measurements are taken in the corda library itself (not at the JMeter), so latency of the requests shouldn't affect the throughput.
-
-
+On a high level view, JMeter is used to drive traffic at a node (PartyA) in the form of flow start requests. Each flow issues an IOU from PartyA to PartyC with a value of 1. To find number of transactions are completed per second, assuming all the requests from JMeter reach the server at the same time, the measurements are taken from the time when the RPC request reaches the node to the completion of the flow at the node which indicates the transaction is committed. Since all the measurements are taken in the corda node itself (not at the JMeter), the latency of the requests shouldn't affect the throughput.
 
 ## Prerequisites
 
